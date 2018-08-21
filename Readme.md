@@ -1,60 +1,51 @@
-Playing sounds with nPose is quite fun though there are many options available for making them happen..
+# nPose Sound Plugin
+The nPose Sound Plugin allows you to play sounds within your nPose object. This ranges from a simple sound effect up to a complete juke box.
 
-Variables:  
-Volume - 0 to 1  
-Play time (float) in seconds.  
-Looping of sound can be turned ON or OFF.  If OFF the sounds play only once, if ON the list of sounds play over and over.  
-Arb. number for turning sounds on = -2345  
-Arb number for turning sounds off = -2344  
-
-To setup nPose to play sounds make a notecard to hold all of the sound keys to play.  Each key should be on a single line.  Following the key in each line add a comma and enter the Play time.  Now all that is needed is a way to call that notecard.  
-Example  
-NC name: Snd1  
-content:  
+## Usage
+Add the following lines to the top of your `.init` NC (if you don't have an `.init` NC then create one):
 ```
-900bdb8a-a208-1c9b-c08e-c67016bf3069,1.0
-f5fe4e73-715b-933f-ab06-a160f25fbc9c,1.0
+PLUGINCOMMAND|SOUND_STOP|-2344
+PLUGINCOMMAND|SOUND|-2346
+PLUGINCOMMAND|SOUND_NC|-2347
 ```
-
-Step 1:  
-Add the nPose Sound Plugin .012 script to the nPose build.  The script can reside in any linked prim as long as the notecard containing the list of sound keys also resides in the same prim.
-
-Step 2:  
-Add the sound notecard to the same prim as the script.  More than one sound notecard can be used for playing other sounds.  nPose is not limited to one sound notecard.
-
-Step 3:  
-To set up a chair that will play a sound or list of sounds when someone sits simply add a SATMSG line to an existing pose set notecard.  For this example the DEFAULT notecard is used.  It is a single AV pose set so only one seat position is available.  The contents of this DEFAULT notecard are the following:
-
+If you want to use a prop as a sound source add the following lines (instead of the above);
 ```
-ANIM|sit crossed|<-0.01573, 0.07928, 0.22998>|<0.00000, 0.00000, -90.00000>|
-SATMSG|-2345|Snd1~1.0~looping=OFF
+PLUGINCOMMAND|SOUND_STOP|-2344|1
+PLUGINCOMMAND|SOUND|-2346|1
+PLUGINCOMMAND|SOUND_NC|-2347|1
 ```
+Place the nPose Sound Plugin script into the prim that should be the source of the sound. This could be any prim within the linkset of the nPose object or a prop. You can use multiple sound sources (place the nPose Sound Plugin in each). To be able to "address" a specific prim you can add a "identifier" to the prim description (see below).
 
-The SATMSG line uses the Arb. number for turning sounds ON followed by a set of 3 variables needed to run the sound.  
-Snd1 is the name of our notecard containing the list of sound keys and play times to use.  
-1.0 is the volume to play the sound.  This one is set to highest volume.  
-looping will tell the sound plugin script to loop or not loop the list of sounds.  The script knows to only play the list of sounds once and not loop back to the beginning.
+## Prim description / Identifier
+To "address" a prim inside a linkset we use the description field of the prim to give it an identifier. Please don't use plain numbers as identifier. If you want to give a prim more than one identifier then separate the identifiers by ~. You can also use one identifier for more than one prim.
 
-Some options:  
-The notecard also could a NOTSATMSG  which would turn OFF the sound when the AV stands up.  This Arb. number takes no variables.  This might be handy if the looping variable is ON.  
-`NOTSATMSG|-2344`
+## Commands
+```
+SOUND|target|name[, params][|name[, params]]...
+SOUND_NC|target|name[, params][|name[, params]]...
+SOUND_STOP|target
+```
+`target`: a comma separated list of identifiers (see Prim description above) or the wildcard `*`  
+`name`: the name or uuid of a sound (SOUND) or of a sound-notecard (SOUND_NC). If you use a name, then the sound/sound-notecard have to be inside the same prim as the nPose Sound Plugin. (Special: The name "SILENCE" can be used with a SOUND command or inside a sound-notecard.)  
+`params`: a comma separated list of key=value pairs
 
-A BTN notecard could be addes as well to turn off the sounds using LINKMSG.  
-`LINKMSG|-2344`
+| key     | value type | range     | default value | description |
+| ------- | ---------- | --------- | ------------- | ----------- |
+| length  | float      | 0.0 - ∞   | 0.0           | length of the sound in seconds. If used with the SOUND_NC command, then this length will become the default value of all sounds inside the sound-notecard.
+| volume  | float      | 0.0 - 1.0 | 1.0           | the volume of the sound. If used with the SOUND_NC command, then this volume will become the default value of all sounds inside the NC.
+| trigger | integer    | 0|1       | 0             | 0: the nPose Sound Plugin plays an attached sound (the sound moves with the prim), 1: the nPose Sound Plugin plays an unattached sound (the sound does not move with the prim)
+| reps    | integer    | -1 - ∞    | 0             | -1: the sound is played forever, any non negative number: number of repetitions
+| queue   | integer    | 0|1       | 0             | 0: the sound is played immediantly (a current sound will be stopped), 1: the sound is played after the current queued sounds.
 
-Step 4:  
-Add the DEFAULT notecard to the nPose build.
+## Sound-notecard
+inside a sound notecard each sound is written in a new line with the syntax:  
+`name[, params]`  
+`name`: the name or uuid of a sound (Special: The name "SILENCE" can be used)  
+`params`: the same as above. Please make sure that you provide at least the `length` param.
 
-Finished.... now when someone sits on this nPose build, the sounds in the notecard will play once.
-______________________________________________________________________________________
+`META|key=value[|key=value]...`  
+`DO|a nPose command` (Leona: I'm not sure about this, maybe I change this in the V1.00 Release, Opinions?)
 
-
-Suppose we want a menu button to play this sound list whenever we want to hear it.  We will need to use a BTN notecard with a LINKMSG line to accomplish this.the BTN notecard would contain the following line:
-LINKMSG|-2345|Snd1~1.0~looping=OFF
-
-Add this notecard to the build and the menu will have a button to select and play this sound whenever we want to hear it.
-
-
-
-
-
+## Global options
+`soundMasterVolume`: default=0.9; all individual volumes are multiplied with this value. This can be used to allow the enduser to globaly change the volume (This will NOT work if you use the Sound Plugin inside a prop).  
+`soundMetaBroadcast`: 0|1 default value 0, set to 1 if you want the script to broadcast SOUND_META_BROADCAST_CURRENT(-2348) and SOUND_META_BROADCAST_LAST(-2349) messages
