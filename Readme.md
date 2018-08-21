@@ -33,9 +33,9 @@ SOUND_STOP|target
 | ------- | ---------- | --------- | ------------- | ----------- |
 | length  | float      | 0.0 - ∞   | 0.0           | length of the sound in seconds. If used with the SOUND_NC command, then this length will become the default value of all sounds inside the sound-notecard.
 | volume  | float      | 0.0 - 1.0 | 1.0           | the volume of the sound. If used with the SOUND_NC command, then this volume will become the default value of all sounds inside the NC.
-| trigger | integer    | 0|1       | 0             | 0: the nPose Sound Plugin plays an attached sound (the sound moves with the prim), 1: the nPose Sound Plugin plays an unattached sound (the sound does not move with the prim)
+| trigger | integer    | 0\|1      | 0             | 0: the nPose Sound Plugin plays an attached sound (the sound moves with the prim), 1: the nPose Sound Plugin plays an unattached sound (the sound does not move with the prim)
 | reps    | integer    | -1 - ∞    | 0             | -1: the sound is played forever, any non negative number: number of repetitions
-| queue   | integer    | 0|1       | 0             | 0: the sound is played immediantly (a current sound will be stopped), 1: the sound is played after the current queued sounds.
+| queue   | integer    | 0\|1      | 0             | 0: the sound is played immediately (a current sound will be stopped), 1: the sound is played after the current queued sounds.
 
 ## Sound-notecard
 inside a sound notecard each sound is written in a new line with the syntax:  
