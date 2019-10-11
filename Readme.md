@@ -43,8 +43,8 @@ inside a sound notecard each sound is written in a new line with the syntax:
 `name`: the name or uuid of a sound (Special: The name "SILENCE" can be used)  
 `params`: the same as above. Please make sure that you provide at least the `length` param.
 
-`META|key=value[|key=value]...` Metadata for the sound-nc. If the global option `soundMetaBroadcast` is set, these will be send by llMessageLinked(LINK_SET, SOUND_META_BROADCAST_CURRENT(-2348) or SOUND_META_BROADCAST_LAST(-2349), a JSON object with the key value pairs, user uuid);  
-`DO|a nPose command` (Leona: I'm not sure about this, maybe I change this in the V1.00 Release, Opinions?)
+`META|key=value[|key=value]...` Metadata for the sound-nc. If the global option `soundMetaBroadcast` is set, these will be send by llMessageLinked(LINK_SET, SOUND_META_BROADCAST_CURRENT(-2348) or SOUND_META_BROADCAST_LAST(-2349), a JSON object with the key value pairs, user uuid);    
+`DO|a nPose command` Example: Place `DO|DOCARD|yourCardName` at the end of the NC to do something when the sound ends.
 
 ## Global options
 `soundMasterVolume`: default=0.9; all individual volumes are multiplied with this value. This can be used to allow the enduser to globaly change the volume (This will NOT work if you use the Sound Plugin inside a prop).  
