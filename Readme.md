@@ -10,12 +10,8 @@ PLUGINCOMMAND|SOUND_STOP|-2344
 PLUGINCOMMAND|SOUND|-2346
 PLUGINCOMMAND|SOUND_NC|-2347
 ```
-If you want to use a prop as a sound source add the following lines (instead of the above);
-```
-PLUGINCOMMAND|SOUND_STOP|-2344
-PLUGINCOMMAND|SOUND|-2346
-PLUGINCOMMAND|SOUND_NC|-2347
-```
+All sound commands are now heard in props using V4.00.
+
 Place the nPose Sound Plugin script into the prim that should be the source of the sound. This could be any prim within the linkset of the nPose object or a prop. You can use multiple sound sources (place the nPose Sound Plugin in each). To be able to "address" a specific prim you can add a "identifier" to the prim description (see below).
 
 ## Prim description / Identifier
