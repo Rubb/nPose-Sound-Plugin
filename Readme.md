@@ -1,8 +1,10 @@
 # nPose Sound Plugin
 The nPose Sound Plugin allows you to play sounds within your nPose object. This ranges from a simple sound effect up to a complete juke box.
 
+For previous versions of nPose-Prop_Plugin, please see [Releases](https://github.com/nPoseTeam/nPose-Sound-Plugin/releases)
+
 ## Usage
-Add the following lines to the top of your `.init` NC (if you don't have an `.init` NC then create one):
+Add the following lines to the top of your [.init](https://github.com/nPoseTeam/nPose-V4/blob/master/nPose%20Utility%20Notecards/.init) NC (if you don't have an `.init` NC then create one):
 ```
 PLUGINCOMMAND|SOUND_STOP|-2344
 PLUGINCOMMAND|SOUND|-2346
