@@ -12,9 +12,9 @@ PLUGINCOMMAND|SOUND_NC|-2347
 ```
 If you want to use a prop as a sound source add the following lines (instead of the above);
 ```
-PLUGINCOMMAND|SOUND_STOP|-2344|1
-PLUGINCOMMAND|SOUND|-2346|1
-PLUGINCOMMAND|SOUND_NC|-2347|1
+PLUGINCOMMAND|SOUND_STOP|-2344
+PLUGINCOMMAND|SOUND|-2346
+PLUGINCOMMAND|SOUND_NC|-2347
 ```
 Place the nPose Sound Plugin script into the prim that should be the source of the sound. This could be any prim within the linkset of the nPose object or a prop. You can use multiple sound sources (place the nPose Sound Plugin in each). To be able to "address" a specific prim you can add a "identifier" to the prim description (see below).
 
@@ -23,8 +23,8 @@ To "address" a prim inside a linkset we use the description field of the prim to
 
 ## Commands
 ```
-SOUND|target|name[, params][|name[, params]]...
-SOUND_NC|target|name[, params][|name[, params]]...
+SOUND|target|soundNameORuuid,[key=value[,key=value]]...
+SOUND_NC|target|soundNameORuuid,[key=value[,key=value]]...
 SOUND_STOP|target
 ```
 `target`: a comma separated list of identifiers (see Prim description above) or the wildcard `*`  
